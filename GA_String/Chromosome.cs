@@ -8,6 +8,7 @@ namespace GA_String
 {
     public class Chromosome
     {
+        //TODO: Fitness skal være en double
         public int fitness; // Fitness-værdien for kromosomet, hvor tæt det er på en løsning
         public char[] genes;   // Generne i kromosomet, som skal forsøge at blive til den rigtige string
 
@@ -19,7 +20,7 @@ namespace GA_String
             // Fylder arrayet med tilfældige bogstaver
             for (int i = 0; i < targetLength; i++) 
             {
-                genes[i] = (char)rand.Next(32, 127); // Giver et tal [32 ; 127[ og konverterer til bogstav
+                genes[i] = (char)rand.Next(32, 127); // Giver et tal [32 ; 127[ og konverterer til char
             }
         }
 

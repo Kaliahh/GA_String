@@ -54,7 +54,6 @@ namespace GA_String
         {
             this.matingPool = new List<Chromosome>();
 
-            //TODO: Brug det her
             int bestFitness = 0;
             for (int i = 0; i < this.popSize; i++) // Finder ud af hvor meget fitness det bedste kromosom har
             {
@@ -67,7 +66,11 @@ namespace GA_String
             // Gennemgår alle kromosomerne i befolkningen, og tilføjer dem til matingPool, baseret på deres fitness-værdi
             for (int i = 0; i < this.popSize; i++)
             {
-                for (int j = 0; j < this.population[i].fitness * 2; j++)
+                double popFitness = (double)this.population[i].fitness;     // Konverterer fitness-værdien for et kromosom til double
+                double matingWeight = popFitness.Map(0, bestFitness, 0, 1); // Mapper fitness-værdien fra 0 til 1, baseret på den bedste fitness-værdi
+                int matingCount = (int)matingWeight * 100;                    // Ganger det med et forholdsvist magisk tal for at det "bliver til noget"
+
+                for (int j = 0; j < matingCount; j++) // Tilføjer kromosomet et antal gange baseret på repWeight
                 {
                     matingPool.Add(this.population[i]);
                 }
@@ -88,7 +91,17 @@ namespace GA_String
 
             //TODO: Sorter befolkningen, så dele af den kan gøres helt tilfældig for at holde variationen i gang
 
-            for (int i = 0; i < this.popSize - (this.popSize * 0.3); i++)
+            //for (int i = 0; i < this.popSize - (this.popSize * 0.3); i++)
+            //{
+                
+            //}
+
+            //for (int i = (int)(this.popSize - (this.popSize * 0.3)); i < this.popSize; i++)
+            //{
+            //    population[i] = new Chromosome(this.target.Length, this.rand);
+            //}
+
+            for (int i = 0; i < this.popSize; i++)
             {
                 int parentIndexA = this.rand.Next(this.matingPool.Count); // Forælder A index i matingPool
                 int parentIndexB = this.rand.Next(this.matingPool.Count); // Forælder B index i matingPool
@@ -100,11 +113,6 @@ namespace GA_String
                 Chromosome child = parentA.Crossover(parentB, this.rand); // Barnet som produkt af forældrenes gener
                 child.Mutate(this.mutationRate, this.rand); // Muterer barnet
                 this.population[i] = child; // Tilføjer barnet til befolkningen
-            }
-
-            for (int i = (int)(this.popSize - (this.popSize * 0.2)); i < this.popSize; i++)
-            {
-                population[i] = new Chromosome(this.target.Length, this.rand);
             }
 
             this.generation++; // Tæller generationstælleren op med 1
