@@ -8,13 +8,12 @@ namespace GA_String
 {
     public class Chromosome
     {
-        //TODO: Fitness skal være en double
-        public int fitness; // Fitness-værdien for kromosomet, hvor tæt det er på en løsning
+        public double fitness; // Fitness-værdien for kromosomet, hvor tæt det er på en løsning
         public char[] genes;   // Generne i kromosomet, som skal forsøge at blive til den rigtige string
 
         public Chromosome(int targetLength, Random rand)
         {
-            fitness = 0;
+            fitness = 0.0;
             genes = new char[targetLength];
 
             // Fylder arrayet med tilfældige bogstaver
@@ -37,8 +36,7 @@ namespace GA_String
                 }
             }
 
-            // this.fitness = (int)(points / target.Length) * 100; // Giver en procentvis fitness-værdi tilbage
-            this.fitness = (int)((points / target.Length) * 100);
+            this.fitness = (points / target.Length) * 100; // Giver en procentvis fitness-værdi tilbage
         }
 
         // Ét-punkts overkrydsning

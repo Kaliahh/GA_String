@@ -26,13 +26,13 @@ namespace GA_String
 
                 Population population = new Population(target, mutationRate, popSize);
 
-                while (population.finished == false) // Bliver ved indtil fitness-værdien har nået 100
+                while (population.finished == false) // Bliver ved indtil fitness-værdien når 100
                 {
                     population.DoMagic(); // Gør alle de der GA ting
 
                     if (population.generation % 1 == 0) // Så hver generation ikke bliver printet ud
                     {
-                        Console.WriteLine(population.generation + " | " + new string(population.best.genes) + ", " + population.best.fitness + " | " + population.matingPool.Count); // Printer den bedste løsning indtil videre
+                        Console.WriteLine(population.generation + " | " + new string(population.best.genes) + ", " + Math.Round(population.best.fitness, 2) + " | " + population.matingPool.Count); // Printer den bedste løsning indtil videre
                     }
                 }
 
