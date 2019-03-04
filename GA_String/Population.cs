@@ -9,18 +9,18 @@ namespace GA_String
 {
     class Population
     {
-        public string target;       // Den string der skal findes
-        public int mutationRate; // Sandsynligheden for mutation for overkrydsning
-        public int popSize;         // Befolkningsantallet
+        private string target { get; }    // Den string der skal findes
+        private int mutationRate { get; } // Sandsynligheden for mutation for overkrydsning
+        private int popSize { get; }      // Befolkningsantallet
 
-        public int generation = 0;   // Generation index
+        public int generation = 0;    // Generation index
         public bool finished = false; // Indikation for om løsningen er fundet
         public Chromosome best;       // Den string der er kommet tættest på, eller når programmet er færdigt, den endelige løsning
 
-        public Chromosome[] population; // Array med alle kromosomer i befolkningen
-        public List<Chromosome> matingPool = new List<Chromosome>(); // Liste med alle de individer der må reproducere
+        public Chromosome[] population; // Array med alle kromosomer i befolkningen. Befolkningen er konstant, derfor er det et array
+        public List<Chromosome> matingPool = new List<Chromosome>(); // Liste med alle de individer der må reproducere. matinPool's størrelse ændrer sig hele tiden, derfor liste
 
-        public Random rand = new Random();
+        private Random rand { get; } = new Random(); // Random object til at generere tilfældige tal
 
         // Constructor
         public Population(string target, int mutationRate, int popSize)
@@ -31,7 +31,7 @@ namespace GA_String
 
             this.population = new Chromosome[popSize];
 
-            best = new Chromosome(target.Length, rand); // Laver et tilfældigt bedste bud
+            best = new Chromosome(target.Length, rand); // Laver et tilfældigt bedste bud, bare så den ikke er null
 
             for (int i = 0; i < this.popSize; i++)
             {
@@ -54,8 +54,24 @@ namespace GA_String
         {
             this.matingPool = new List<Chromosome>();
 
+            double bestFitness = FindBest();
+
+            // Gennemgår alle kromosomerne i befolkningen, og tilføjer dem til matingPool, baseret på deres fitness-værdi
+            for (int i = 0; i < this.popSize; i++)
+            {
+                double popFitness = this.population[i].fitness;             // Konverterer fitness-værdien for et kromosom til double
+                double matingWeight = popFitness.Map(0, bestFitness, 0, 1); // Mapper fitness-værdien fra 0 til 1, baseret på den bedste fitness-værdi
+                int matingCount = (int)matingWeight * 100;                  // Ganger det med et forholdsvist magisk tal for at det "bliver til noget"
+                AddToPool(this.population[i], matingCount);                 // Tilføjer kromosomet til matingPool matingCount gange
+            }
+        }
+
+        // Finder ud af hvor meget fitness det bedste kromosom har
+        public double FindBest()
+        {
             double bestFitness = 0;
-            for (int i = 0; i < this.popSize; i++) // Finder ud af hvor meget fitness det bedste kromosom har
+
+            for (int i = 0; i < this.popSize; i++)
             {
                 if (this.population[i].fitness > bestFitness)
                 {
@@ -63,26 +79,15 @@ namespace GA_String
                 }
             }
 
-            // Gennemgår alle kromosomerne i befolkningen, og tilføjer dem til matingPool, baseret på deres fitness-værdi
-            for (int i = 0; i < this.popSize; i++)
-            {
-                double popFitness = this.population[i].fitness;     // Konverterer fitness-værdien for et kromosom til double
-                double matingWeight = popFitness.Map(0, bestFitness, 0, 1); // Mapper fitness-værdien fra 0 til 1, baseret på den bedste fitness-værdi
-                int matingCount = (int)matingWeight * 100;                    // Ganger det med et forholdsvist magisk tal for at det "bliver til noget"
+            return bestFitness;
+        }
 
-                for (int j = 0; j < matingCount; j++) // Tilføjer kromosomet et antal gange baseret på repWeight
-                {
-                    matingPool.Add(this.population[i]);
-                }
-            }
-
-            // Hvis ingen kromosomer blev tilføjet, tilføjes hele befolkningen til matingPool
-            if (matingPool.Count == 0)
+        // Tilføjer kromosomet til matingPool et antal gange baseret på repWeight
+        public void AddToPool(Chromosome chromosome, int matingCount)
+        {
+            for (int i = 0; i < matingCount; i++) 
             {
-                for (int i = 0; i < this.popSize; i++)
-                {
-                    matingPool.Add(this.population[i]);
-                }
+                this.matingPool.Add(chromosome);
             }
         }
 
@@ -102,7 +107,7 @@ namespace GA_String
                 this.population[i] = child; // Tilføjer barnet til befolkningen
             }
 
-            this.generation++; // Tæller generationstælleren op med 1
+            this.generation++; // Der er blevet dannet en ny generation
         }
 
         // Gennemgår alle kromosomer i befolkningen, og beregner deres fitness-værdi
@@ -120,6 +125,7 @@ namespace GA_String
             }
         }
 
+        // Checker bare om fitness er 100
         public void TargetCheck()
         {
             if (this.best.fitness == 100)

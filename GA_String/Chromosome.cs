@@ -11,6 +11,7 @@ namespace GA_String
         public double fitness; // Fitness-værdien for kromosomet, hvor tæt det er på en løsning
         public char[] genes;   // Generne i kromosomet, som skal forsøge at blive til den rigtige string
 
+        // Constructor
         public Chromosome(int targetLength, Random rand)
         {
             fitness = 0.0;
@@ -46,20 +47,17 @@ namespace GA_String
 
             int crossPoint = rand.Next(this.genes.Length); // Vælger et tilfældigt punkt i kromosomet, som bruges til overkrydsning
 
-            // Hvis indexet er mindre end crossPoint, kommer generne fra parentA, 
-            // hvis indexet er større, kommer generene fra parentB
             for (int i = 0; i < this.genes.Length; i++)
             {
-                if (i > crossPoint) 
+                if (i > crossPoint) // Hvis indexet er mindre end crossPoint, kommer generne fra parentA
                 {
                     child.genes[i] = this.genes[i];
                 }
 
-                else
+                else // Hvis indexet er større, kommer generene fra parentB
                 {
                     child.genes[i] = parentB.genes[i];
                 }
-
             }
 
             return child;
