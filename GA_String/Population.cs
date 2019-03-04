@@ -54,14 +54,15 @@ namespace GA_String
         {
             this.matingPool = new List<Chromosome>();
 
-            //int bestFitness = 0;
-            //for (int i = 0; i < this.popSize; i++) // Finder ud af hvor meget fitness det bedste kromosom har
-            //{
-            //    if (this.population[i].fitness > bestFitness)
-            //    {
-            //        bestFitness = this.population[i].fitness;
-            //    }
-            //}
+            //TODO: Brug det her
+            int bestFitness = 0;
+            for (int i = 0; i < this.popSize; i++) // Finder ud af hvor meget fitness det bedste kromosom har
+            {
+                if (this.population[i].fitness > bestFitness)
+                {
+                    bestFitness = this.population[i].fitness;
+                }
+            }
 
             // Gennemgår alle kromosomerne i befolkningen, og tilføjer dem til matingPool, baseret på deres fitness-værdi
             for (int i = 0; i < this.popSize; i++)
