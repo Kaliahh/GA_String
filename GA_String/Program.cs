@@ -10,7 +10,7 @@ namespace GA_String
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             string target = "Her er et eller andet langt, som programmet vil proeve at finde!";   // Den string der skal findes
             int mutationRate = 1; // Sandsynligheden for at mutation opstår ved overkrydsning
@@ -32,13 +32,22 @@ namespace GA_String
 
                     if (population.generation % 1 == 0) // Så hver generation ikke bliver printet ud
                     {
-                        Console.WriteLine(population.generation + " | " + new string(population.best.genes) + ", " + Math.Round(population.best.fitness, 2) + " | " + population.matingPool.Count); // Printer den bedste løsning indtil videre
+                        Console.WriteLine("{0,4} | {1,10} | {2,5} | {3,6} | {4,5}",
+                            population.generation,
+                            new string(population.best.genes),
+                            Math.Round(population.best.fitness, 2),
+                            population.matingPool.Count,
+                            Math.Round(population.avgFitness, 2)); // Printer den bedste løsning indtil videre
                     }
                 }
 
                 timer.Stop();
 
-                Console.WriteLine("\n" + population.generation + " | " + new string(population.best.genes) + ", " + population.best.fitness);
+                Console.WriteLine("\n{0,4} | {1,10} | {2,5}",
+                    population.generation,
+                    new string(population.best.genes),
+                    population.best.fitness);
+
                 Console.WriteLine("Time elapsed: " + timer.ElapsedMilliseconds + " milliseconds");
                 Console.WriteLine("\n\nThe End!");
 
