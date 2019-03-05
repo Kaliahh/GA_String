@@ -12,7 +12,8 @@ namespace GA_String
     {
         static void Main()
         {
-            string target = "Her er et eller andet langt, som programmet vil proeve at finde!";   // Den string der skal findes
+            // Den string der skal findes
+            string target = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ";   
             int mutationRate = 1; // Sandsynligheden for at mutation opstår ved overkrydsning
             int popSize = 1000;   // Befolkningsantal
             int choice = 1;
