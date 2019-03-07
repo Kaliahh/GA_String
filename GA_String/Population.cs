@@ -13,9 +13,10 @@ namespace GA_String
         public int mutationRate { get; } // Sandsynligheden for mutation for overkrydsning
         public int popSize { get; }      // Befolkningsantallet
 
-        public int generation = 0;    // Generation index
-        public bool finished = false; // Indikation for om løsningen er fundet
-        public Chromosome best;       // Den string der er kommet tættest på, eller når programmet er færdigt, den endelige løsning
+        public int generation = 0;      // Generation index
+        public bool finished = false;   // Indikation for om løsningen er fundet
+        public double avgFitness = 0.0; // Gennemsnits fitness for befolkningen
+        public Chromosome best;         // Den string der er kommet tættest på, eller når programmet er færdigt, den endelige løsning
 
         public Chromosome[] population; // Array med alle kromosomer i befolkningen. Befolkningen er konstant, derfor er det et array
         public List<Chromosome> matingPool = new List<Chromosome>(); // Liste med alle de individer der må reproducere. matinPool's størrelse ændrer sig hele tiden, derfor liste
@@ -123,6 +124,19 @@ namespace GA_String
                     this.best = this.population[i];
                 }
             }
+
+            CalcAvgFitness();
+        }
+
+        public void CalcAvgFitness()
+        {
+            double totalFitness = 0;
+            for (int i = 0; i < this.popSize; i++)
+            {
+                totalFitness += this.population[i].fitness;
+            }
+
+            this.avgFitness = totalFitness / popSize;
         }
 
         // Checker bare om fitness er 100
