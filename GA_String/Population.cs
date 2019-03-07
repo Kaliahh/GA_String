@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace GA_String
 {
-    class Population
+    public class Population
     {
-        private string target { get; }    // Den string der skal findes
-        private int mutationRate { get; } // Sandsynligheden for mutation for overkrydsning
-        private int popSize { get; }      // Befolkningsantallet
+        public string target { get; }    // Den string der skal findes
+        public int mutationRate { get; } // Sandsynligheden for mutation for overkrydsning
+        public int popSize { get; }      // Befolkningsantallet
 
         public int generation = 0;    // Generation index
         public bool finished = false; // Indikation for om løsningen er fundet

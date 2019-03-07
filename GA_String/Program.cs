@@ -5,46 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace GA_String
 {
     class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
-            string target = "Her er et eller andet langt, som programmet vil proeve at finde!";   // Den string der skal findes
-            int mutationRate = 1; // Sandsynligheden for at mutation opstår ved overkrydsning
-            int popSize = 1000;   // Befolkningsantal
-            int choice = 1;
+            //string target = "Her er et eller andet langt, som programmet vil proeve at finde!";   // Den string der skal findes
+            //int mutationRate = 1; // Sandsynligheden for at mutation opstår ved overkrydsning
+            //int popSize = 1000;   // Befolkningsantal
 
-            while (choice > 0 || choice < 0) // Bliver ved indtil brugeren siger stop
-            {
-                Console.WriteLine("Searching for: " + "\"" + target + "\"" + " | " + target.Length);
-                Console.ReadLine();
+            //GAInitiator ini = new GAInitiator(target, mutationRate, popSize);
+            //ini.Console_Run();
 
-                var timer = Stopwatch.StartNew();
-
-                Population population = new Population(target, mutationRate, popSize);
-
-                while (population.finished == false) // Bliver ved indtil fitness-værdien når 100
-                {
-                    population.DoMagic(); // Gør alle de der GA ting
-
-                    if (population.generation % 1 == 0) // Så hver generation ikke bliver printet ud
-                    {
-                        Console.WriteLine(population.generation + " | " + new string(population.best.genes) + ", " + Math.Round(population.best.fitness, 2) + " | " + population.matingPool.Count); // Printer den bedste løsning indtil videre
-                    }
-                }
-
-                timer.Stop();
-
-                Console.WriteLine("\n" + population.generation + " | " + new string(population.best.genes) + ", " + population.best.fitness);
-                Console.WriteLine("Time elapsed: " + timer.ElapsedMilliseconds + " milliseconds");
-                Console.WriteLine("\n\nThe End!");
-
-                Console.WriteLine("\nAgain?\n0: No\n1: Yes");
-                choice = int.Parse(Console.ReadLine());
-            }
+            Application.Run(new GAForm());
         }
     }
 
