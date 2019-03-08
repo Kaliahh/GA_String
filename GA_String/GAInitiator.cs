@@ -44,7 +44,7 @@ namespace GA_String
 
                     if (population.generation % 1 == 0) // Så hver generation ikke bliver printet ud
                     {
-                        Console.WriteLine(population.generation + " | " + new string(population.best.genes) + ", " + Math.Round(population.best.fitness, 2) + " | " + population.matingPool.Count); // Printer den bedste løsning indtil videre
+                        Console.WriteLine(population.generation + " | " + new string(population.best.genes) + ", " + Math.Round(population.best.fitness, 2) + " | " + population.matingPool.Count + " | " + population.avgFitness); // Printer den bedste løsning indtil videre
                     }
                 }
 
